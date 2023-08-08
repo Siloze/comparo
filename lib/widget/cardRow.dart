@@ -5,7 +5,9 @@ class CardRow extends StatefulWidget {
   final List<ProductCard> cards;
   final String name;
   final double height;
-  const CardRow({super.key, this.name = "default", this.cards = const [], this.height = 200});
+  final double padding;
+  final double distanceBetweenCards = 10;
+  const CardRow({super.key, this.name = "default", this.cards = const [], this.height = 200, this.padding = 5});
 
   @override
   State<CardRow> createState() => _CardRowState();
@@ -18,6 +20,7 @@ class _CardRowState extends State<CardRow> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         buildName(),
+        SizedBox(height: widget.padding),
         SizedBox(
           height: widget.height,
           child: buildList()
@@ -33,7 +36,7 @@ class _CardRowState extends State<CardRow> {
       itemCount: widget.cards.length,
       itemBuilder: (BuildContext context, int index) {
         return Padding(
-          padding: const EdgeInsets.all(10),
+          padding: EdgeInsets.only(left: index != 0 ? widget.distanceBetweenCards : 0),
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
@@ -42,7 +45,7 @@ class _CardRowState extends State<CardRow> {
                 width: 1,
               ),
             ),
-            padding: const EdgeInsets.all(7),
+            padding: EdgeInsets.all(widget.padding),
             child: widget.cards[index],
           )
         );

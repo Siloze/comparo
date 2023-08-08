@@ -16,26 +16,26 @@ class _ModelPageState extends State<ModelPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-        body: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-        child: Column(
-          children: [
-            buildImage(),
-            buildProductContainer(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  buildProductInfos(),
-                  const SizedBox(height: 100),
-                  const Center(child: Text("Autour de vous", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white))),
-                  const SizedBox(height: 20),
-                  buildMap()
-                ],
-              )
+      body: Stack(
+        children: [
+          buildImage(),
+          buildProductContainer(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                buildProductInfos(),
+                buildMap()
+              ],
             )
-          ],
-        )
-        )
+          ),
+          SafeArea(child:
+            IconButton(onPressed: () {
+              Navigator.pop(context);
+            }, 
+            icon: const Icon(Icons.arrow_back, size: 30, color: Colors.black,))
+          ),
+        ],
+      )
     );
   }
 
@@ -44,9 +44,9 @@ class _ModelPageState extends State<ModelPage> {
     return Container(
       height: MediaQuery.of(context).size.height * 0.45,
       width: MediaQuery.of(context).size.width,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         image: DecorationImage(
-          image: NetworkImage("https://picsum.photos/200/300"),
+          image: NetworkImage(widget.product.image),
           fit: BoxFit.fill
         )
       ),
@@ -65,6 +65,9 @@ class _ModelPageState extends State<ModelPage> {
         const SizedBox(height: 10),
         const Text("Description", style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.white)),
         Text(widget.product.description, style: const TextStyle(fontSize: 15, color: Colors.white)),
+                    const SizedBox(height: 100),
+            const Center(child: Text("Autour de vous", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white))),
+            const SizedBox(height: 20),
       ],
       )
     );
@@ -72,22 +75,31 @@ class _ModelPageState extends State<ModelPage> {
 
   Widget buildProductContainer({required Widget child})
   {
-    return SingleChildScrollView(
-      child: Transform.translate(
-        offset: Offset(0, -MediaQuery.of(context).size.height * 0.1),
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-            color:  backgroundColor,
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(40),
-              topRight: Radius.circular(40)
-            ),
-          ),
-          child: Container(padding: EdgeInsets.all(15),  child: child)
-          ),
-        ),
-      );
+        return SingleChildScrollView(
+          physics: ClampingScrollPhysics(),
+          child:  Column(
+            children: [
+              SizedBox(height: MediaQuery.of(context).size.height * 0.3),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  color: backgroundColor,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(40),
+                    topRight: Radius.circular(40)
+                  ),
+                ),
+                child: Container(
+                  padding: EdgeInsets.all(15),
+                  child: child
+                )
+              )
+            ],
+          )
+        );
+        
+       
+
   }
 
   Widget buildMap()

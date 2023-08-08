@@ -1,7 +1,7 @@
-import 'package:comparo/class/product.dart';
+import 'package:comparo/provider/modelList.dart';
 import 'package:comparo/screen/homePage.dart';
-import 'package:comparo/screen/modelPage.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,13 +13,18 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MultiProvider(providers: [
+      ChangeNotifierProvider(create: (context) => ModelListProvider()),
+    ],
+    child: MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: ModelPage(product: Product(name: "Test", description: "Test", price: 0.0))
+      home:  const HomePage(),
+    )
     );
+
   }
 }

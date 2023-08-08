@@ -9,7 +9,7 @@ class ProductCard extends StatefulWidget {
   final double scale;
   final double widthRatio;
   final double borderRadius;
-  const ProductCard({super.key, this.name = "default", this.description = "default", this.price = 0.0, this.image = "", this.scale = 1.0, this.widthRatio = 0.8, this.borderRadius = 15});
+  const ProductCard({super.key, this.name = "default", this.description = "default", this.price = 0.0, this.image = "", this.scale = 1.0, this.widthRatio = 0.8, this.borderRadius = 5});
 
   @override
   State<ProductCard> createState() => _ProductCardState();
@@ -63,9 +63,7 @@ class _ProductCardState extends State<ProductCard> {
   }
 
   Widget buildContent() {
-    return Container(
-      padding: const EdgeInsets.all(10),
-      child: Column(
+    return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Row(children: [
@@ -78,7 +76,6 @@ class _ProductCardState extends State<ProductCard> {
           const SizedBox(height: 10),
           //buildButtonRow(),
         ],
-      )
     );
   }
 
