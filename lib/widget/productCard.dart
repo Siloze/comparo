@@ -66,12 +66,17 @@ class _ProductCardState extends State<ProductCard> {
     return Container(
       padding: const EdgeInsets.all(10),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          Row(children: [
+            Spacer(),
+            IconButton(onPressed: () {}, icon: Icon(Icons.favorite_border, color: Colors.white, size: 40 * widget.scale)),
+          ],),
+          Spacer(),
           buildPrice(),
           buildName(),
           const SizedBox(height: 10),
-          buildButtonRow(),
+          //buildButtonRow(),
         ],
       )
     );
